@@ -73,21 +73,23 @@ class MemeController {
   // source, its title and the like number.
   setCurrentMeme(meme) {
     this._currentMeme = meme;
-
     // Get the element with the ID "#meme-image-id" and replace the
     // source with the URL of the current meme.
     $('#meme-image-id').attr('src', meme.URL);
 
     // TODO: Set the title of the current meme.
+    $('#meme-title-id').text(meme.title);
 
     // Call updateLikeNumberElement with the current meme's likeNumber.
     this.updateLikeNumberElement(this._currentMeme.likeNumber);
+
   }
 
   // Updates the Like Number DOM element with the provided likeNumber.
   updateLikeNumberElement(likeNumber) {
     // TODO: Set the number of likes by updating the text of the element with the ID
     // "#meme-likes-id".
+    $('#meme-likes-id').text(likeNumber);
   }
 
   // Sets the next meme.
@@ -104,16 +106,23 @@ class MemeController {
   // Sets the previous meme.
   previousMeme() {
     // TODO: Complete this function. It should be similar to the nextMeme() function above.
+      var previousMemeID = (this._currentMeme.ID - 1) % this._memes.length;
+      var previousMeme = this._memes[previousMemeID];
+      if (previousMeme) {
+        this.setCurrentMeme(previousMeme);
+      }
   }
 
   // Updates the likeNumber of the current meme when it is liked.
   like() {
     // TODO: update the like number of the "#meme-likes-id" element.
+      $('#meme-likes-id').text(this._currentMeme.likeNumber ++);
   }
 
   // Updates the likeNumber of the current meme when it is disliked.
   dislike() {
     // TODO: Complete this function. It should be similar to the like() function above.
+      $('#meme-likes-id').text(this._currentMeme.likeNumber --);
   }
 
   constructor(memes, currentMemeID) {
@@ -121,7 +130,7 @@ class MemeController {
     // Otherwise, this will refer to the button object, not the controlle object!
     // This is why knowing Scope & Closure is important!
     self = this;
-
+    
     this._memes = memes;
     this._currentMeme = memes[currentMemeID];
 
@@ -139,16 +148,25 @@ function setUpButton(memeCtrl) {
 
   // TODO: Add handler for previous meme. The element is the button
   // with the ID "#prev-image-id". See the example above.
-  $('#prev-image-id').click(function () {});
+  $('#prev-image-id').click(function () {
+    memeCtrl.previousMeme();
+  });
 
   // TODO: Add handler for clicking Like button. The element is the button
   // with the ID "#like-button-id". See the example above.
-  $('#like-button-id').click(function () {});
+  $('#like-button-id').click(function () {
+    memeCtrl.like();
+  });
 
   // TODO: Add handler for clicking dislike button. The element is the button
   // with the ID "#dislike-button-id". See the example above.
-  $('#dislike-button-id').click(function () {});
+  $('#dislike-button-id').click(function () {
+    memeCtrl.dislike()
+  });
 }
+
+
+
 
 // --------------------------------------------------------------
 // END EXERCISE

@@ -48,3 +48,6 @@ h1 {
 .meme-block {
   width: 300px;
 }
+.selector-for-some-widget {
+  box-sizing: content-box;
+}
